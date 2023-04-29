@@ -4,7 +4,7 @@ import asyncio
 from random import randint
 from itertools import cycle
 from environs import Env
-from curses_tools import draw_frame, get_frame_size, stars_generator, get_arts_from_folder
+from curses_tools import draw_frame, get_frame_size, stars_generator, get_arts_from_folder, read_controls
 from fire_animation import fire
 
 env = Env()
@@ -39,12 +39,19 @@ async def blink(canvas, row, column, symbol):
 async def animate_spaceship(canvas, row, column, frames):
     frames_cycle = cycle(frames)
 
+    x_move = 0
+    y_move = 0
+
     while True:
         current_frame = next(frames_cycle)
-
         frame_size_y, frame_size_x = get_frame_size(current_frame)
-        frame_pos_x = round(column) - round(frame_size_x / 2)
-        frame_pos_y = round(row) - round(frame_size_y / 2)
+
+        rows_direction, columns_direction, space_pressed = read_controls(canvas)
+        x_move += columns_direction
+        y_move += rows_direction
+
+        frame_pos_x = round(column) - round(frame_size_x / 2) + x_move
+        frame_pos_y = round(row) - round(frame_size_y / 2) + y_move
 
         draw_frame(canvas, frame_pos_y, frame_pos_x, current_frame)
         canvas.refresh()
