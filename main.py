@@ -53,7 +53,8 @@ def draw(canvas):
         for row, column, symbol in stars_generator(height, width)
     ]
 
-    coroutines.append(fire(canvas, width / 2, height))
+    gunshot = fire(canvas, height - 1, width / 2)
+    coroutines.append(gunshot)
 
     while True:
         for coroutine in coroutines:
