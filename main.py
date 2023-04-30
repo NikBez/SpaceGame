@@ -89,20 +89,20 @@ def draw(canvas):
     curses.curs_set(False)
     canvas.border()
     canvas.nodelay(True)
-    canvas_heigth, canvas_width = canvas.getmaxyx()
+    canvas_height, canvas_width = canvas.getmaxyx()
 
     coroutines = [
         blink(canvas, row, column, symbol)
-        for row, column, symbol in stars_generator(canvas_heigth, canvas_width)
+        for row, column, symbol in stars_generator(canvas_height, canvas_width)
     ]
 
-    gunshot = fire(canvas, canvas_heigth - 1, canvas_width / 2)
+    gunshot = fire(canvas, canvas_height - 1, canvas_width / 2)
     coroutines.append(gunshot)
 
     arts = get_arts_from_folder(env('ANIMATIONS_PATH'))
     coro_rocket_anim = animate_spaceship(
         canvas,
-        canvas_heigth / 2,
+        canvas_height / 2,
         canvas_width / 2,
         arts
     )
