@@ -4,12 +4,14 @@ import asyncio
 from random import randint
 from itertools import cycle
 from environs import Env
-from curses_tools import draw_frame, get_frame_size, stars_generator, get_arts_from_folder, read_controls, check_borders
+from curses_tools import draw_frame, get_frame_size, stars_generator,\
+    get_arts_from_folder, read_controls
 from fire_animation import fire
 
 
 env = Env()
 env.read_env()
+
 
 async def blink(canvas, row, column, symbol):
     offset = randint(0, 3)
@@ -82,7 +84,7 @@ async def animate_spaceship(canvas, row, column, frames):
             negative=True
         )
 
-        
+
 def draw(canvas):
     curses.curs_set(False)
     canvas.border()
